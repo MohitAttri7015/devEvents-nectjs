@@ -42,7 +42,7 @@ const BookingSchema = new Schema<IBooking>({
 
 
 //Pre-save hook (middleware) to check if the event is existing before saving a booking
-BookingSchema.pre('save', async function(next){
+BookingSchema.pre('save', async function(){
     // Access current document
     // this = the current booking document
     const booking = this as IBooking;
@@ -60,19 +60,13 @@ BookingSchema.pre('save', async function(next){
             // Stops save operation
             // Throws validation error
             if(!eventExists){
-                const err = new Error('Event does not exist');
-                err.name = 'ValidationError';
-                return next(err);
+                throw new Error('Event does not exist');
             }
         } catch{
-            const valErr = new Error('Error validating event ID');
-            valErr.name = 'ValidationError';
-            return next(valErr);
+            throw new Error('Error validating event ID')
         }
     }
 
-    // Continue saving
-    next();
 });
 
 

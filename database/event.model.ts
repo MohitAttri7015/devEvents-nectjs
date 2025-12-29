@@ -115,7 +115,7 @@ const EventSchema = new Schema<IEvent>(
 
 
 //Pre save hook (middleware) to generate slug from title
-EventSchema.pre('save', function (next){
+EventSchema.pre('save', function (){
     // Access current event
     // this = current event being saved
     const event = this as IEvent;
@@ -136,7 +136,6 @@ EventSchema.pre('save', function (next){
     }
 
 
-    next();
 });
 
 
