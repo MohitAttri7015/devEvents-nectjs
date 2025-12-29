@@ -77,6 +77,8 @@ BookingSchema.index({ eventId: 1 });
 BookingSchema.index({ eventId: 1, createdAt: -1 });
 // Find bookings of a user fast
 BookingSchema.index({ email: 1 });
+// Compound unique index to prevent duplicate bookings
+BookingSchema.index({ eventId: 1, email: 1 }, { unique: true });
 
 // Create model safely
 const Booking = models.Booking || model<IBooking>('Booking', BookingSchema);
