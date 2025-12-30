@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from 'next/image'
+import BookEvent from "@/components/BookEvent";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -9,6 +10,8 @@ const EventDetailItem = ({ icon, alt, label }: { icon: string; alt: string; labe
         <p>{label}</p>
     </div>
 );
+
+const Booking = 10;
 
 
 const EventAgenda = ({ agendaItems }: { agendaItems: string[] } ) => (
@@ -33,6 +36,7 @@ const EventTags = ({ tags }: { tags: string[] }) => (
 
 
 const EventDetail = async ({ params }: { params: Promise<{ slug: string }> }) => {
+    'use cache'
     const { slug } = await params;
     const request = await fetch(`${BASE_URL}/api/events/${slug}`);
     const { event } = await request.json();
@@ -77,7 +81,18 @@ const EventDetail = async ({ params }: { params: Promise<{ slug: string }> }) =>
                 </div>
 
                 <aside className="booking">
-                    <p className="text-lg font-semibold">Book Event</p>
+                    <div className="signup-card">
+                        <h2>Book Your Spot</h2>
+                        {Booking > 0 ? (
+                            <p className="text-sm">
+                                Join {Booking} people who have already booked their spot!
+                            </p>
+                        ): (
+                            <p className="text-sm">Be the first to book your spot!</p>
+                        )}
+
+                        <BookEvent eventId={event._id} slug={event.slug} />
+                    </div>
                 </aside>
             </div>
         </section> 
