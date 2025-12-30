@@ -15,13 +15,6 @@ declare global {
 const MONGODB_URI = process.env.MONGODB_URI; //Get the MongoDB connection string from environment variables
 
 
-//Safety check for missing URI
-//If URI is missing → crash immediately
-if(!MONGODB_URI) {
-    throw new Error('Please define the MONGODB_URI environment variable.');
-}
-
-
 //Create or reuse cached connection
 // If a connection already exists → reuse it
 // Otherwise → create an empty cache object
@@ -39,6 +32,12 @@ if(!global.mongoose){
 
 //Create the conncection function it return a promise that resolves to the mongoose instance
 async function connectDb(): Promise<typeof mongoose> {
+
+    //Safety check for missing URI
+    //If URI is missing → crash immediately
+    if(!MONGODB_URI) {
+        throw new Error('Please define the MONGODB_URI environment variable.');
+    }
 
     //Return existing connection if already connected
     //If DB is connected → return the cached connection

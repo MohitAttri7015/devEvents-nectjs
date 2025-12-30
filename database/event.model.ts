@@ -41,13 +41,13 @@ const EventSchema = new Schema<IEvent>(
             type: String, 
             required: [true, 'Description is required'], 
             trim: true,
-            minlength: [1000, 'Description must be at least 1000 characters long'] 
+            minlength: [50, 'Description must be at least 50 characters long'] 
         },
         overview: { 
             type: String, 
             required: [true, 'Overview is required'], 
             trim: true,
-            minlength: [500, 'Overview must be at least 500 characters long']
+            minlength: [50, 'Overview must be at least 50 characters long']
         },
         image: { 
             type: String, 
